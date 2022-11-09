@@ -9,7 +9,8 @@ import (
 
 func test1() {
 	println("test1")
-	url := "http://localhost:8080/persons"
+	//url := "http://localhost:8080/persons"
+	url := HOST_URL + "/persons"
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		println(err.Error())
@@ -27,7 +28,8 @@ func test1() {
 
 func test2() {
 	println("test2")
-	url := "http://localhost:8080/persons/1"
+	//url := "http://localhost:8080/persons/1"
+	url := HOST_URL + "/persons/1"
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		println(err.Error())
@@ -45,7 +47,9 @@ func test2() {
 
 func test3() {
 	println("test3")
-	url := "http://localhost:8080/persons/"
+	//url := "http://localhost:8080/persons/"
+	url := HOST_URL + "/persons/"
+
 	data := strings.NewReader(`{"id":3, "name": "petr" , "age": 42, "address":"47", "work":"46"}`)
 	req, err := http.NewRequest("POST", url, data)
 	req.Header.Add("Content-type", "application/json")
@@ -67,7 +71,9 @@ func test3() {
 
 func test4() {
 	println("test4")
-	url := "http://localhost:8080/persons/3"
+	//url := "http://localhost:8080/persons/3"
+	url := HOST_URL + "/persons/3"
+
 	data := strings.NewReader(`{"id" : 3 , "name": "oleg" , "age": 42, "address":"47", "work":"46"}`)
 	req, err := http.NewRequest("PATCH", url, data)
 	req.Header.Add("Content-type", "application/json")
@@ -89,7 +95,9 @@ func test4() {
 
 func test5() {
 	println("test5")
-	url := "http://localhost:8080/persons/3"
+	//url := "http://localhost:8080/persons/3"
+	url := HOST_URL + "/persons/3"
+
 	req, err := http.NewRequest("DELETE", url, nil)
 	req.Header.Add("Content-type", "application/json")
 	if err != nil {
@@ -111,7 +119,10 @@ func test5() {
 func test6() {
 	println("test6")
 	println(HOST_URL + "/persons/")
-	req, err := http.NewRequest("Get", HOST_URL+"/persons/", nil)
+	//url := HOST_URL + "/persons"
+	req, err := http.NewRequest("GET", HOST_URL+"/persons/", nil)
+
+	//req, err := http.NewRequest("Get", HOST_URL+"/persons/", nil)
 	println(":0")
 	if err != nil {
 		println(err.Error())
