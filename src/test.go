@@ -107,3 +107,31 @@ func test5() {
 	body, _ := ioutil.ReadAll(res.Body)
 	fmt.Println(string(body))
 }
+
+func test6() {
+	println("test6")
+	println(HOST_URL + "/persons/")
+	req, err := http.NewRequest("Get", HOST_URL+"/persons/", nil)
+	println(":0")
+	if err != nil {
+		println(err.Error())
+		return
+	}
+	println(":1")
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		println(":1_1")
+		println(err.Error())
+		return
+	}
+	println(":2")
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		println(":1_1")
+		println(err.Error())
+		return
+	}
+	fmt.Println(string(body))
+	println(":3")
+}

@@ -90,6 +90,11 @@ const (
 
 var database = Database{}
 
+const HOST_PORT = "5000"
+const HOST_ADDRESS = "localhost"
+
+const HOST_URL = "http://" + HOST_ADDRESS + ":" + HOST_PORT + "/api/v1"
+
 func main() {
 	println("Begin??????")
 	database, err := Initialize("program", "test", "persons")
@@ -144,11 +149,12 @@ func main() {
 
 	//db.Conn.Close()
 
-	addr := "localhost/api/v1/:8080"
-	listener, err := net.Listen("tcp", addr)
+	//addr := "0.0.0.0/api/v1/:8080"
+	listener, err := net.Listen("tcp", HOST_ADDRESS+":"+HOST_PORT)
 	if err != nil {
 		log.Fatalf("Error occurred: %s", err.Error())
 	}
+
 	//dbUser, dbPassword, dbName :=
 	//	os.Getenv("POSTGRES_USER"),
 	//	os.Getenv("POSTGRES_PASSWORD"),
@@ -186,9 +192,10 @@ func main() {
 	//test1()
 	//test5()
 	test1()
+	test6()
 
 	defer Stop(server)
-	log.Printf("Started server on %s", addr)
+	log.Printf("Started server on %s", HOST_ADDRESS)
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
 	log.Println(fmt.Sprint(<-ch))

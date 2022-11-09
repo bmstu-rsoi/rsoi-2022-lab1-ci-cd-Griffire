@@ -13,7 +13,7 @@ func NewHandler1(db *Database) http.Handler {
 	dbInstance = *db
 	router.MethodNotAllowed(methodNotAllowedHandler)
 	router.NotFound(notFoundHandler)
-	router.Route("/api", persons)
+	router.Route("/api/v1/persons", persons)
 	return router
 }
 func methodNotAllowedHandler(w http.ResponseWriter, r *http.Request) {

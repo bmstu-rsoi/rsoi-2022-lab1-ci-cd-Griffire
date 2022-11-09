@@ -19,9 +19,9 @@ var itemIDKey = "itemID"
 
 func persons(router chi.Router) {
 	println("persons yra")
-	router.Get("/v1/persons", getAllItems)
-	router.Post("/v1/persons", createItem)
-	router.Route("/v1/persons/{itemId}", func(router chi.Router) {
+	router.Get("/", getAllItems)
+	router.Post("/", createItem)
+	router.Route("/{itemId}", func(router chi.Router) {
 		router.Use(ItemContext)
 		router.Get("/", getItem)
 		router.Patch("/", updateItem)
