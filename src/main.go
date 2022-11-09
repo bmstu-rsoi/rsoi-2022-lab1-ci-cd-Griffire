@@ -95,7 +95,7 @@ const HOST_ADDRESS = "localhost"
 
 //const HOST_URL = "http://" + HOST_ADDRESS + ":" + HOST_PORT + "/api/v1"
 var HOST = "localhost"
-var PORT = "5000"
+var PORT = "8080"
 var HOST_URL = ""
 var PORTDB = "5432"
 
