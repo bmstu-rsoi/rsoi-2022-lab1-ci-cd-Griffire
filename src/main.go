@@ -144,7 +144,7 @@ func main() {
 
 	//db.Conn.Close()
 
-	addr := ":8080"
+	addr := "/api/v1/:8080"
 	listener, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Fatalf("Error occurred: %s", err.Error())
