@@ -1,69 +1,4 @@
-//package main
-//
-//import (
-//	"database/sql"
-//	_ "github.com/lib/pq"
-//)
-//
-//const (
-//	HOST = "localhost"
-//	PORT = 5432
-//)
-//
-//type Database struct {
-//	Conn *sql.DB
-//}
-//
-//
-//
-//func main() {
-//	db, err := Initialize("program", "test", "persons")
-//	if err != nil {
-//		println(err.Error())
-//		return
-//	}
-//	//db.comand_db(2)
-//	//db.comand_db(3)
-//	db.comand_db(0)
-//	db.comand_db(1)
-//	person1 := &Person{1, "ivan", 30, "piter", "proger"}
-//	person2 := &Person{2, "ivan4", 190, "kazan", "tsar"}
-//	err = db.AddItem(*person1)
-//	err = db.AddItem(*person2)
-//	if err != nil {
-//		println(err.Error())
-//	}
-//
-//	l, err := db.GetAllItems()
-//	println(l.Persons[0].to_String())
-//
-//	db.DeleteItem(2)
-//	l, err = db.GetAllItems()
-//	println("\n")
-//	println(l.Persons[0].to_String())
-//
-//	(person1).age = -3
-//	db.UpdateItem(1, *person2)
-//	l, err = db.GetAllItems()
-//	println("\n")
-//
-//	println(l.Persons[0].to_String())
-//	//res, err := db.comand_db(3)
-//	//if err != nil {
-//	//	println("err3")
-//	//	println(err.Error())
-//	//} else {
-//	//	for res.Next(){
-//	//		println("!")
-//	//		var item Person
-//	//		res.Scan(&item.id, &item.name,&item.age , &item.address, &item.work)
-//	//		//println(strconv.Itoa(item.id), item.name, item.age , item.address, item.work)
-//	//		println(item.to_String())
-//	//	}
-//	//}
-//
-//	db.Conn.Close()
-//}
+
 package main
 
 import (
@@ -83,10 +18,7 @@ type Database struct {
 	Conn *sql.DB
 }
 
-//const (
-//	HOST = "localhost"
-//	PORT = 5432
-//)
+
 
 var database = Database{}
 
