@@ -46,8 +46,6 @@ func ItemContext(next http.Handler) http.Handler {
 func del(b []byte) []byte {
 	kk := 1
 	for k, v := range b {
-		//print(k, string(v)+" ")
-		//println(strconv.Atoi(string(v)))
 		if v == 0 {
 			kk = k
 			break
@@ -56,41 +54,66 @@ func del(b []byte) []byte {
 	println("?", kk)
 	return b[0:kk]
 }
+
+//func createItem(w http.ResponseWriter, r *http.Request) {
+//	item := &Person{}
+//	println("here")
+//	b := make([]byte, 100, 100)
+//	r.Body.Read(b)
+//	b = del(b)
+//	err := json.Unmarshal(b, &item)
+//	if err != nil {
+//		println(err.Error())
+//	}
+//	println(item.Work)
+//	println("!!!2", string(b))
+//	//if err := render.Bind(r, item); err != nil {
+//	//	render.Render(w, r, ErrBadRequest)
+//	//	return
+//	//}
+//	//println(item.to_String())
+//	if err, _ := dbInstance.AddItem(item); err != nil {
+//		render.Render(w, r, ErrorRenderer(err))
+//		return
+//	} else {
+//		println("yra202")
+//		println(item.Id)
+//		//var h1 *http.Header
+//		r.Header.Set("location", "/api/v1/persons/"+strconv.Itoa(item.Id))
+//		//render.Respond(w, r, http.Response{
+//		//	Status:     "200",
+//		//	StatusCode: 200,
+//		//	Header:     r.Header,
+//		//})
+//		render.Respond(w,r,201)
+//		//render.Render(w, r, ErrorRenderer(err))
+//
+//	}
+//}
 func createItem(w http.ResponseWriter, r *http.Request) {
 	item := &Person{}
-	println("here")
-	b := make([]byte, 100, 100)
+	b := make([]byte, 200, 200)
 	r.Body.Read(b)
+	a := b
 	b = del(b)
 	err := json.Unmarshal(b, &item)
 	if err != nil {
 		println(err.Error())
 	}
-	println(item.Work)
-	println("!!!2", string(b))
-	//if err := render.Bind(r, item); err != nil {
-	//	render.Render(w, r, ErrBadRequest)
-	//	return
-	//}
-	//println(item.to_String())
+	print("NAME:>>")
+	println(string(a))
+	print("NAME:>>")
+	println(item.Name)
 	if err, _ := dbInstance.AddItem(item); err != nil {
 		render.Render(w, r, ErrorRenderer(err))
 		return
 	} else {
-		println("yra202")
-		println(item.Id)
-		//var h1 *http.Header
-		r.Header.Set("location", "/api/v1/persons/"+strconv.Itoa(item.Id))
-		render.Respond(w, r, http.Response{
-			Status:     "201",
-			StatusCode: 201,
-			Header:     r.Header,
-		})
+		//r.Header.Set("location", "/api/v1/persons/"+strconv.Itoa(item.Id))
+		w.Header().Set("location", "/api/v1/persons/"+strconv.Itoa(item.Id))
+		w.WriteHeader(201)
+		render.JSON(w, r, "well added")
+
 	}
-	//if err := render.Render(w, r, item); err != nil {
-	//	render.Render(w, r, ServerErrorRenderer(err))
-	//	return
-	//}
 }
 
 func getAllItems(w http.ResponseWriter, r *http.Request) {
@@ -99,7 +122,9 @@ func getAllItems(w http.ResponseWriter, r *http.Request) {
 		render.Render(w, r, ServerErrorRenderer(err))
 		return
 	}
-	render.JSON(w, r, items)
+	//println(items)
+	//println(items.Persons)
+	render.JSON(w, r, items.Persons)
 }
 
 func getItem(w http.ResponseWriter, r *http.Request) {
@@ -117,17 +142,24 @@ func getItem(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteItem(w http.ResponseWriter, r *http.Request) {
+	println("DEEELEEETE")
 	itemId := r.Context().Value(itemIDKey).(int)
 	err := dbInstance.DeleteItem(itemId)
 	if err != nil {
+		println("DEEELEEETE1")
 		if err == db.ErrNoMatch {
-			render.Render(w, r, ErrNotFound)
+			println("DEEELEEETE2")
+			render.JSON(w, r, errorCode204)
 		} else {
-			render.Render(w, r, ServerErrorRenderer(err))
+			println("DEEELEEETE3")
+			render.JSON(w, r, errorCode204)
 		}
 		return
 	}
+	w.WriteHeader(204)
+	render.JSON(w, r, "well added")
 }
+
 func updateItem(w http.ResponseWriter, r *http.Request) {
 	itemId := r.Context().Value(itemIDKey).(int)
 	itemData := Person{}
@@ -135,6 +167,8 @@ func updateItem(w http.ResponseWriter, r *http.Request) {
 		render.Render(w, r, ErrBadRequest)
 		return
 	}
+	println("ITDATA:")
+	println(itemData.Id, itemData.Name, itemData.Address, itemData.Work)
 	item, err := dbInstance.UpdateItem(itemId, itemData)
 	if err != nil {
 		if err == db.ErrNoMatch {

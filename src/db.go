@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"strconv"
@@ -10,11 +9,18 @@ import (
 
 func Initialize(username, password, database string) (Database, error) {
 	db := Database{}
-	println(HOST, PORT, username, password, database)
+	println(HOST, PORTDB, username, password, database)
 	//dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 	//HOST, PORT, username, password, database)
-	dsn := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable",
-		username, password, HOST, PORT, database)
+	dsn := "postgres://vnkldgkbuxtsdk:edc93be519c3326ee21f9197426f8e0f29c17483ed84f9a261927987a85cb075@ec2-34-248-169-69.eu-west-1.compute.amazonaws.com:5432/dd9rcurfahnu5r"
+	username = "vnkldgkbuxtsdk"
+	password = "edc93be519c3326ee21f9197426f8e0f29c17483ed84f9a261927987a85cb075"
+	database = "dd9rcurfahnu5r"
+	HOST = "ec2-34-248-169-69.eu-west-1.compute.amazonaws.com"
+	PORTDB = "5432"
+	println(HOST, PORTDB, username, password, database)
+	//dsn := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable",
+	//	username, password, HOST, PORTDB, database)
 	conn, err := sql.Open("postgres", dsn)
 	if err != nil {
 		return db, err
@@ -50,7 +56,7 @@ func (db Database) comand_db(n int) (*sql.Rows, error) {
 
 func (db Database) GetAllItems() (*personList, error) {
 	list := &personList{}
-	rows, err := db.Conn.Query("SELECT * FROM persons ORDER BY id DESC")
+	rows, err := db.Conn.Query("SELECT * FROM persons ORDER BY Id DESC")
 	if err != nil {
 		return list, err
 	}
@@ -113,9 +119,31 @@ func (db Database) DeleteItem(itemId int) error {
 	}
 }
 
+func (p1 *Person) personUpdate(p2 Person) {
+	if p1.Id == 0 {
+		p1.Id = p2.Id
+	}
+	if p1.Age == 0 {
+		p1.Age = p2.Age
+	}
+	if p1.Work == "" {
+		p1.Work = p2.Work
+	}
+	if p1.Address == "" {
+		p1.Address = p2.Address
+	}
+	if p1.Name == "" {
+		p1.Name = p2.Name
+	}
+
+}
+
 func (db Database) UpdateItem(itemId int, itemData Person) (Person, error) {
 	item := Person{}
-	query := `UPDATE persons SET name=$1, age=$2, address= $3, work= $4 WHERE id=$5 RETURNING id, name, age, address, work;`
+	item0, _ := db.GetItemById(itemId)
+	itemData.personUpdate(item0)
+
+	query := `UPDATE persons SET name=$1, age=$2, address= $3, work=$4 WHERE id=$5 RETURNING id, name, age, address, work;`
 	err := db.Conn.QueryRow(query, itemData.Name, itemData.Age, itemData.Address, itemData.Work, itemId).Scan(&item.Id, &item.Name, &item.Age, &item.Address, &item.Work)
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -123,5 +151,7 @@ func (db Database) UpdateItem(itemId int, itemData Person) (Person, error) {
 		}
 		return item, err
 	}
+	println("hhheeerree")
+	println(item.Name, item.Work)
 	return item, nil
 }
