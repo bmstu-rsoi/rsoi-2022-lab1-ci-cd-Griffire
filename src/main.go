@@ -113,14 +113,14 @@ func main() {
 	}
 	database.comand_db(0)
 	database.comand_db(1)
-	person1 := &Person{1, "ivan", 30, "piter", "proger"}
+	//person1 := &Person{1, "ivan", 30, "piter", "proger"}
 	//person3 := `{"id":1 , "name":"ivan","age": 30, "address":"piter", "work":"proger"}`
 	//p1, _ := json.Marshal(&person1)
 	//println(string(p1))
-	person2 := &Person{2, "ivan4", 190, "kazan", "tsar"}
-	err, n1 := database.AddItem(person1)
-	err, n2 := database.AddItem(person2)
-	println(n1, n2)
+	//person2 := &Person{2, "ivan4", 190, "kazan", "tsar"}
+	//err, n1 := database.AddItem(person1)
+	//err, n2 := database.AddItem(person2)
+	//println(n1, n2)
 	//err = database.AddItem(*person3)
 
 	defer database.Conn.Close()
@@ -139,16 +139,16 @@ func main() {
 		server.Serve(listener)
 	}()
 
-	test1()
-	test2()
-	test3()
-	test3()
-	test3()
+	//test1()
+	//test2()
+	//test3()
+	//test3()
+	//test3()
 	//test4()
 	//test1()
 	//test5()
-	test1()
-	test6()
+	//test1()
+	//test6()
 
 	defer Stop(server)
 	log.Printf("Started server on %s", HOST_ADDRESS)
