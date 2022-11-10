@@ -16,12 +16,13 @@ jobs:
           fetch-depth: 0
 
       - name: Deploy
-      uses: akhileshns/heroku-deploy@v3.4.6
-      with:
-        heroku_api_key: ${{secrets.HEROKY_API_KEY}}
-        heroku_app_name: lab1lezh
-        heroku_email: eaglegriff@mail.ru
-        usedocker: true
+        uses: akhileshns/heroku-deploy@v3.4.6
+        with:
+          heroku_api_key: ${{secrets.HEROKY_API_KEY}}
+          heroku_app_name: lab1lezh
+          heroku_email: eaglegriff@mail.ru
+          usedocker: true
+      # TODO build, test and deploy project
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
