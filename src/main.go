@@ -27,13 +27,14 @@ const HOST_ADDRESS = "localhost"
 
 //const HOST_URL = "http://" + HOST_ADDRESS + ":" + HOST_PORT + "/api/v1"
 var HOST = "localhost"
-var PORT = "8080"
+var PORT = "5000"
 var HOST_URL = ""
 var PORTDB = "5432"
 
 func main() {
 	herokuPort, exist := os.LookupEnv("PORT")
 	if exist {
+		println("HERRRRROOOOOKKKUUUUU")
 		PORT = herokuPort
 	}
 	HOST_URL = "http://" + HOST_ADDRESS + ":" + PORT + "/api/v1"
