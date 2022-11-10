@@ -13,12 +13,12 @@ func Initialize(username, password, database string) (Database, error) {
 	//dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 	//HOST, PORT, username, password, database)
 	dsn := "postgres://vnkldgkbuxtsdk:edc93be519c3326ee21f9197426f8e0f29c17483ed84f9a261927987a85cb075@ec2-34-248-169-69.eu-west-1.compute.amazonaws.com:5432/dd9rcurfahnu5r"
-	username = "vnkldgkbuxtsdk"
-	password = "edc93be519c3326ee21f9197426f8e0f29c17483ed84f9a261927987a85cb075"
-	database = "dd9rcurfahnu5r"
-	HOST = "ec2-34-248-169-69.eu-west-1.compute.amazonaws.com"
-	PORTDB = "5432"
-	println(HOST, PORTDB, username, password, database)
+	//username = "vnkldgkbuxtsdk"
+	//password = "edc93be519c3326ee21f9197426f8e0f29c17483ed84f9a261927987a85cb075"
+	//database = "dd9rcurfahnu5r"
+	//HOST = "ec2-34-248-169-69.eu-west-1.compute.amazonaws.com"
+	//PORTDB = "5432"
+	//println(HOST, PORTDB, username, password, database)
 	//dsn := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable",
 	//	username, password, HOST, PORTDB, database)
 	conn, err := sql.Open("postgres", dsn)

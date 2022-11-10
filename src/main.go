@@ -23,21 +23,26 @@ type Database struct {
 var database = Database{}
 
 //const HOST_PORT = "5000"
-const HOST_ADDRESS = "localhost"
+//const HOST_ADDRESS = "localhost"
 
 //const HOST_URL = "http://" + HOST_ADDRESS + ":" + HOST_PORT + "/api/v1"
 var HOST = "localhost"
-var PORT = "5000"
+var PORT = "8080"
 var HOST_URL = ""
 var PORTDB = "5432"
 
 func main() {
 	herokuPort, exist := os.LookupEnv("PORT")
 	if exist {
-		println("HERRRRROOOOOKKKUUUUU", herokuPort)
+		println("HERRRRROOOOOKKKUUUUU_PORT", herokuPort)
 		PORT = herokuPort
 	}
-	HOST_URL = "http://" + HOST_ADDRESS + ":" + PORT + "/api/v1"
+	herokuHOST, exist := os.LookupEnv("HOST")
+	if exist {
+		println("HERRRRROOOOOKKKUUUUU_HOST", herokuHOST)
+		HOST = herokuHOST
+	}
+	//HOST_URL = "http://" + HOST_ADDRESS + ":" + PORT + "/api/v1"
 	println("Begin??????")
 	database, err := Initialize("program", "test", "persons")
 	if err != nil {
@@ -60,7 +65,8 @@ func main() {
 
 	httpHandler := NewHandler1(&database)
 
-	listener, err := net.Listen("tcp", HOST_ADDRESS+":"+PORT)
+	println("HOST: " + HOST + "\nPORT: " + PORT)
+	listener, err := net.Listen("tcp", HOST+":"+PORT)
 	if err != nil {
 		log.Fatalf("Error occurred: %s", err.Error())
 	}
@@ -84,7 +90,7 @@ func main() {
 	//test6()
 
 	defer Stop(server)
-	log.Printf("Started server on %s", HOST_ADDRESS)
+	log.Printf("Started server on %s:%s", HOST, PORT)
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
 	log.Println(fmt.Sprint(<-ch))
