@@ -34,7 +34,7 @@ var PORTDB = "5432"
 func main() {
 	herokuPort, exist := os.LookupEnv("PORT")
 	if exist {
-		println("HERRRRROOOOOKKKUUUUU")
+		println("HERRRRROOOOOKKKUUUUU", herokuPort)
 		PORT = herokuPort
 	}
 	HOST_URL = "http://" + HOST_ADDRESS + ":" + PORT + "/api/v1"
