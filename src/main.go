@@ -42,6 +42,8 @@ func main() {
 		println("HERRRRROOOOOKKKUUUUU_HOST", herokuHOST)
 		HOST = herokuHOST
 	}
+	fmt.Println(os.Getenv("PORT"), os.Getenv("HOST"), os.Getenv("DATABASE_URL"))
+
 	//HOST_URL = "http://" + HOST_ADDRESS + ":" + PORT + "/api/v1"
 	println("Begin??????")
 	database, err := Initialize("program", "test", "persons")
@@ -65,6 +67,7 @@ func main() {
 
 	httpHandler := NewHandler1(&database)
 
+	HOST = "0.0.0.0"
 	println("HOST: " + HOST + "\nPORT: " + PORT)
 	listener, err := net.Listen("tcp", HOST+":"+PORT)
 	if err != nil {
